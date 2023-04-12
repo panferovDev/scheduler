@@ -1,7 +1,11 @@
-import React from 'react'
+import React from 'react';
+import AddGroupForm from '../UI/AddGroupForm';
 
 export default function DashboardPage(): JSX.Element {
   return (
-    <div>DashboardPage</div>
-  )
+    <>
+      <h3>DashboardPage</h3>
+      <AddGroupForm />
+    </>
+  );
 }
