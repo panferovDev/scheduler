@@ -13,5 +13,6 @@ export const getSequelizerConfig = async (
   password: configService.get('DB_PASS'),
   database: configService.get('DB_NAME'),
   synchronize: true,
+  logging: false,
   models: [GroupModel, StudentModel],
 });

@@ -5,16 +5,24 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import { useAppDispatch } from '../../features/reduxHooks';
+import { createGroupThunk } from '../../features/apiThunk';
+
+type FormTypes = {
+  groupname: string;
+};
 
 export default function AddGroupForm(): JSX.Element {
   const dispatch = useAppDispatch();
-  
+
   const submitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const { groupname } = Object.fromEntries(new FormData(event.target as HTMLFormElement));
-    console.log(groupname);
+    const { groupname } = Object.fromEntries(new FormData(event.currentTarget)) as FormTypes;
+    event.currentTarget.reset();
+    if(groupname){
+      void dispatch(createGroupThunk(groupname));
+    }
   };
-  
+
   return (
     <Row>
       <Col>

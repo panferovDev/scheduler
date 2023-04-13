@@ -2,7 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import groupSlice from '../slices/groupSlice';
 
 const rootReducer = combineReducers({
-  group: groupSlice,
+  groups: groupSlice,
 });
 
 const store = configureStore({
