@@ -1,5 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { GroupModel } from 'src/dbModels/group.model';
+import { StudentModel } from 'src/dbModels/student.model';
 
 export const getSequelizerConfig = async (
   configService: ConfigService,
@@ -11,5 +13,5 @@ export const getSequelizerConfig = async (
   password: configService.get('DB_PASS'),
   database: configService.get('DB_NAME'),
   synchronize: true,
-  models: [],
+  models: [GroupModel, StudentModel],
 });
