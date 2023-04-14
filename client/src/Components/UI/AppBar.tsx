@@ -9,7 +9,7 @@ export default function AppBar(): JSX.Element {
     <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="#home">
-            Scheduler
+            Scheduler_2.0
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

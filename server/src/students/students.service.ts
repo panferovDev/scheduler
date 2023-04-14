@@ -20,7 +20,6 @@ export class StudentsService {
     }));
     return await this.studentModel.bulkCreate(students, {
       ignoreDuplicates: true,
-      returning: true,
     });
   }
 }

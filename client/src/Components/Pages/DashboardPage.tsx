@@ -16,13 +16,13 @@ export default function DashboardPage(): JSX.Element {
   return (
     <Row>
       <Col md={6} className="mt-3">
-        <h4>Add group</h4>
+        <h4><u>Add group</u></h4>
         <AddGroupForm />
-        <h4>Add students</h4>
+        <h4><u>Add students</u></h4>
         <AddStudentsForm />
       </Col>
       <Col md={6} className="mt-3">
-        <h4>All groups</h4>
+        <h4><u>All groups</u></h4>
         <GroupList />
       </Col>
     </Row>

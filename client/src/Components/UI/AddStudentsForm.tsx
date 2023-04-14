@@ -6,6 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import { useAppDispatch, useAppSelector } from '../../features/reduxHooks';
 import { addStudentsThunk } from '../../features/apiThunk';
+import { setNotify } from '../../features/slices/notifySlice';
 
 type FormTypes = {
   students: string;
@@ -18,16 +19,15 @@ export default function AddStudentsForm(): JSX.Element {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const regex = /([а-яА-ЯёЁ]+(?:[-\s][а-яА-ЯёЁ]+))/gm;
+    const regex = /([а-яА-ЯёЁ]+(?:[\s][а-яА-ЯёЁ]+))/gm;
     const { students, groupId } = Object.fromEntries(new FormData(e.currentTarget)) as FormTypes;
-    if(groupId !== 'Select group') {
+    if (groupId !== 'Select group') {
       const matches = [...students.matchAll(regex)];
       const result = matches.map((match) => [...match[1].split(' ')]);
       e.currentTarget.reset();
-      void dispatch(addStudentsThunk({ group_id: +groupId , students: result }))
-      console.log(groupId, result);
-
+      void dispatch(addStudentsThunk({ group_id: +groupId, students: result }));
     }
+    dispatch(setNotify('Please select group'));
   };
 
   return (
@@ -48,11 +48,7 @@ export default function AddStudentsForm(): JSX.Element {
           <Form.Label>Add students</Form.Label>
           <InputGroup className="mb-3">
             <InputGroup.Text>Students</InputGroup.Text>
-            <Form.Control
-              name="students"
-              as="textarea"
-              aria-label="With textarea"
-            />
+            <Form.Control name="students" as="textarea" aria-label="With textarea" />
           </InputGroup>
           <Button type="submit" variant="warning">
             submit

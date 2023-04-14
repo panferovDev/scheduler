@@ -9,7 +9,6 @@ export class StudentsController {
   @Post()
   async addStudents(@Body() students: StudentDto) {
     const studentsRaw = await this.studentsService.addStudents(students);
-    console.log(studentsRaw);
-    return { ololo: '1' };
+    return studentsRaw;
   }
 }

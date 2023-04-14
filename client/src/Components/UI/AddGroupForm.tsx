@@ -6,6 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import { useAppDispatch } from '../../features/reduxHooks';
 import { createGroupThunk } from '../../features/apiThunk';
+import { setNotify } from '../../features/slices/notifySlice';
 
 type FormTypes = {
   groupname: string;
@@ -18,9 +19,10 @@ export default function AddGroupForm(): JSX.Element {
     event.preventDefault();
     const { groupname } = Object.fromEntries(new FormData(event.currentTarget)) as FormTypes;
     event.currentTarget.reset();
-    if(groupname){
+    if (groupname) {
       void dispatch(createGroupThunk(groupname));
     }
+    dispatch(setNotify('Please enter group name'));
   };
 
   return (
