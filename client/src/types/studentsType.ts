@@ -4,3 +4,8 @@ export type StudentType = {
   rating?: number;
   present?: boolean;
 };
+
+export type StudentsSubmitType = {
+  group_id: number;
+  students: string[][];
+}

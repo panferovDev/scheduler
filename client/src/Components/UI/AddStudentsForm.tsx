@@ -4,7 +4,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
-import { useAppSelector } from '../../features/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../features/reduxHooks';
+import { addStudentsThunk } from '../../features/apiThunk';
 
 type FormTypes = {
   students: string;
@@ -13,14 +14,20 @@ type FormTypes = {
 
 export default function AddStudentsForm(): JSX.Element {
   const grops = useAppSelector((state) => state.groups);
+  const dispatch = useAppDispatch();
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const regex = /([а-яА-ЯёЁ]+(?:[-\s][а-яА-ЯёЁ]+))/gm;
     const { students, groupId } = Object.fromEntries(new FormData(e.currentTarget)) as FormTypes;
-    const matches = [...students.matchAll(regex)];
-    const result = matches.map((match) => [...match[1].split(' ')]);
-    console.log(groupId, result);
+    if(groupId !== 'Select group') {
+      const matches = [...students.matchAll(regex)];
+      const result = matches.map((match) => [...match[1].split(' ')]);
+      e.currentTarget.reset();
+      void dispatch(addStudentsThunk({ group_id: +groupId , students: result }))
+      console.log(groupId, result);
+
+    }
   };
 
   return (

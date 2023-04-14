@@ -5,6 +5,7 @@ import { GroupModule } from './group/group.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { getSequelizerConfig } from './configs/sequelize.config';
+import { StudentsModule } from './students/students.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { getSequelizerConfig } from './configs/sequelize.config';
       inject: [ConfigService],
       useFactory: getSequelizerConfig,
     }),
+    StudentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

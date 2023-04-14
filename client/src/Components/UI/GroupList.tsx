@@ -4,10 +4,16 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import CloseButton from 'react-bootstrap/CloseButton';
 
-import { useAppSelector } from '../../features/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../features/reduxHooks';
+import { delGroupThunk } from '../../features/apiThunk';
 
 export default function GroupList(): JSX.Element {
   const grops = useAppSelector((state) => state.groups);
+  const dispatch = useAppDispatch()
+
+  const clickHandler = (id: number): void => {
+    void dispatch(delGroupThunk(id))
+  }
 
   return (
     <Row>
@@ -15,8 +21,8 @@ export default function GroupList(): JSX.Element {
         <ListGroup>
           {grops.map((group) => (
             <ListGroup.Item key={group.id} className="d-flex justify-content-between">
-              <span>{group.groupName}</span>
-              <CloseButton  />
+              <span>{group.groupName} {group.students.length}</span>
+              <CloseButton  onClick={() => clickHandler(group.id)}/>
             </ListGroup.Item>
           ))}
         </ListGroup>

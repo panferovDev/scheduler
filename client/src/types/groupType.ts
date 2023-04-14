@@ -1,7 +1,7 @@
 import type { StudentType } from './studentsType';
 
 export type GroupType = {
-  id?: number;
+  id: number;
   groupName: string;
-  students?: StudentType[];
+  students: StudentType[];
 };
