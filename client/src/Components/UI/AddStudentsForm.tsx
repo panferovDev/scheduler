@@ -13,7 +13,7 @@ type FormTypes = {
   groupId: string;
 };
 
-export default function AddStudentsForm(): JSX.Element {
+function AddStudentsForm(): JSX.Element {
   const grops = useAppSelector((state) => state.groups);
   const dispatch = useAppDispatch();
 
@@ -23,11 +23,15 @@ export default function AddStudentsForm(): JSX.Element {
     const { students, groupId } = Object.fromEntries(new FormData(e.currentTarget)) as FormTypes;
     if (groupId !== 'Select group') {
       const matches = [...students.matchAll(regex)];
-      const result = matches.map((match) => [...match[1].split(' ')]);
+      const result = matches
+        .map((match) => [...match[1].split(' ')])
+        .filter((el) => el.length === 2)
+        .map((el) => ({ firstName: el[0], lastName: el[1] }));
       e.currentTarget.reset();
       void dispatch(addStudentsThunk({ group_id: +groupId, students: result }));
+    } else {
+      dispatch(setNotify('Please select group'));
     }
-    dispatch(setNotify('Please select group'));
   };
 
   return (
@@ -58,3 +62,5 @@ export default function AddStudentsForm(): JSX.Element {
     </Row>
   );
 }
+
+export default React.memo(AddStudentsForm);

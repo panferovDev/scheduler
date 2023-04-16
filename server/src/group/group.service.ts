@@ -27,9 +27,13 @@ export class GroupService {
     await this.groupModel.destroy({ where: { id } });
   }
 
-  async addGroup(groupName: { groupName: string }): Promise<GroupModel> {
+  async addGroup(group: {
+    groupName: string;
+    phase: number;
+  }): Promise<GroupModel> {
     const [newGroup] = await this.groupModel.findOrCreate({
-      where: { groupName: groupName.groupName },
+      where: { groupName: group.groupName },
+      defaults: { phase: group.phase },
     });
     return await this.getGroupById(newGroup.id);
   }

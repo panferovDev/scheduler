@@ -6,6 +6,9 @@ export class GroupModel extends Model<GroupModel> {
   @Column
   groupName: string;
 
+  @Column
+  phase: number;
+
   @HasMany(() => StudentModel)
   students: StudentModel[];
 }

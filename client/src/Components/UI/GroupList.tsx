@@ -1,34 +1,35 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React, { useCallback } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import CloseButton from 'react-bootstrap/CloseButton';
 
 import { useAppDispatch, useAppSelector } from '../../features/reduxHooks';
-import { delGroupThunk } from '../../features/apiThunk';
+import { setModalNotify } from '../../features/slices/ConfirmModalSlise';
+import GroupListItem from './GroupListItem';
 
-export default function GroupList(): JSX.Element {
+function GroupList(): JSX.Element {
   const grops = useAppSelector((state) => state.groups);
   const dispatch = useAppDispatch();
 
-  const clickHandler = (id: number): void => {
-    void dispatch(delGroupThunk(id));
-  };
-
+  const clickHandler = useCallback(
+    ({ id, name, type }: { id: number; name: string; type: 'group' | 'student' }): void => {
+      dispatch(setModalNotify({ id, name, type }));
+    },
+    [dispatch],
+  );
   return (
     <Row>
       <Col>
         <ListGroup>
           {grops.map((group) => (
-            <ListGroup.Item key={group.id} className="d-flex justify-content-between">
-              <span>
-                <b> {group.groupName} </b>[students: {group.students.length}]
-              </span>
-              <CloseButton onClick={() => clickHandler(group.id)} />
-            </ListGroup.Item>
+            <GroupListItem key={group.id} group={group} modalHandler={clickHandler} />
           ))}
         </ListGroup>
       </Col>
     </Row>
   );
 }
+
+export default React.memo(GroupList);

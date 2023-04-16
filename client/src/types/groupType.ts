@@ -4,4 +4,5 @@ export type GroupType = {
   id: number;
   groupName: string;
   students: StudentType[];
+  phase: number;
 };

@@ -1,7 +1,13 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { GroupType, StudentType } from '../../types';
-import { addStudentsThunk, createGroupThunk, delGroupThunk, fetchGroups } from '../apiThunk';
+import {
+  addStudentsThunk,
+  createGroupThunk,
+  delGroupThunk,
+  delStudentThunk,
+  fetchGroups,
+} from '../apiThunk';
 
 type InitilState = GroupType[];
 
@@ -10,7 +16,13 @@ const initialState: InitilState = [];
 const groupSlice = createSlice({
   name: 'group',
   initialState,
-  reducers: {},
+  reducers: {
+    deleteStudentAction(state, action: PayloadAction<number>) {
+      state.forEach((group) => {
+        group.students = group.students.filter((student) => student.id !== action.payload);
+      });
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       fetchGroups.fulfilled,
@@ -35,7 +47,14 @@ const groupSlice = createSlice({
     builder.addCase(delGroupThunk.fulfilled, (state, action: PayloadAction<number>) =>
       state.filter((el) => el.id !== action.payload),
     );
+
+    builder.addCase(delStudentThunk.fulfilled, (state, action: PayloadAction<number>) => {
+      state.forEach((group) => {
+        group.students = group.students.filter((student) => student.id !== action.payload);
+      });
+    });
   },
 });
 
 export default groupSlice.reducer;
+export const { deleteStudentAction } = groupSlice.actions;

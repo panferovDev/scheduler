@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { People } from 'react-bootstrap-icons';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import AddGroupForm from '../UI/AddGroupForm';

@@ -8,5 +8,8 @@ export type StudentType = {
 
 export type StudentsSubmitType = {
   group_id: number;
-  students: string[][];
+  students: {
+    firstName: string;
+    lastName: string;
+}[];
 }

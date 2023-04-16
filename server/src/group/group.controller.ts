@@ -1,5 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { GroupService } from './group.service';
+import { GroupDtoCreate } from './dto/group.dto';
 
 @Controller('group')
 export class GroupController {
@@ -9,8 +19,9 @@ export class GroupController {
     return this.groupService.getGroups();
   }
 
+  @UsePipes(new ValidationPipe())
   @Post()
-  async addGroup(@Body() groupName: { groupName: string }) {
+  async addGroup(@Body() groupName: GroupDtoCreate) {
     return this.groupService.addGroup(groupName);
   }
 

@@ -5,6 +5,8 @@ import MainPage from './Components/Pages/MainPage';
 import DashboardPage from './Components/Pages/DashboardPage';
 import AppBar from './Components/UI/AppBar';
 import CustomModal from './Components/UI/Notyfy';
+import ConfirmModal from './Components/UI/ConfirmModal';
+import StudentsModal from './Components/UI/StudentsModal';
 
 function App(): JSX.Element {
   return (
@@ -16,6 +18,8 @@ function App(): JSX.Element {
         <Route path="*" element={<h3>404</h3>} />
       </Routes>
       <CustomModal />
+      <ConfirmModal />
+      <StudentsModal />
     </Container>
   );
 }

@@ -9,7 +9,8 @@ import { createGroupThunk } from '../../features/apiThunk';
 import { setNotify } from '../../features/slices/notifySlice';
 
 type FormTypes = {
-  groupname: string;
+  groupName: string;
+  phase: string;
 };
 
 export default function AddGroupForm(): JSX.Element {
@@ -17,12 +18,13 @@ export default function AddGroupForm(): JSX.Element {
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const { groupname } = Object.fromEntries(new FormData(event.currentTarget)) as FormTypes;
-    event.currentTarget.reset();
-    if (groupname) {
-      void dispatch(createGroupThunk(groupname));
+    const { groupName, phase } = Object.fromEntries(new FormData(event.currentTarget)) as FormTypes;
+    if (groupName && phase !== 'Select phase') {
+      event.currentTarget.reset();
+      void dispatch(createGroupThunk({groupName, phase}));
+    } else {
+      dispatch(setNotify('Please enter group name and select phase'));
     }
-    dispatch(setNotify('Please enter group name'));
   };
 
   return (
@@ -33,7 +35,7 @@ export default function AddGroupForm(): JSX.Element {
             <Form.Label>Group create</Form.Label>
             <InputGroup className="mb-3">
               <Form.Control
-                name="groupname"
+                name="groupName"
                 autoComplete="off"
                 placeholder="Group Name"
                 aria-label="Recipient's username"
@@ -42,6 +44,14 @@ export default function AddGroupForm(): JSX.Element {
               <Button type="submit" variant="warning" id="button-addon2">
                 Create Group
               </Button>
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <Form.Select name="phase" aria-label="Default select example mb-3">
+                <option>Select phase</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </Form.Select>
             </InputGroup>
           </Form.Group>
         </Form>
