@@ -12,11 +12,11 @@ export const fetchGroups = createAsyncThunk<GroupType[]>('groups/fetchGroups', a
     }),
 );
 
-export const createGroupThunk = createAsyncThunk<GroupType, { groupName: string; phase: string }>(
+export const createGroupThunk = createAsyncThunk<{group: GroupType, created: boolean}, { groupName: string; phase: string, directionId: number }>(
   'groups/createGroup',
   async (newGroup, { dispatch }) =>
     axios
-      .post<GroupType>('/api/group', newGroup)
+      .post<{group: GroupType, created: boolean}>('/api/group', newGroup)
       .then((res) => res.data)
       .catch((err) => {
         dispatch(setNotify('Error create group'));

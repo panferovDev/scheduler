@@ -8,13 +8,14 @@ import Row from 'react-bootstrap/Row';
 import { useAppDispatch, useAppSelector } from '../../features/reduxHooks';
 import { setModalNotify } from '../../features/slices/ConfirmModalSlise';
 import GroupListItem from './GroupListItem';
+import type { NotifyType } from '../../types/notifyTypes';
 
 function GroupList(): JSX.Element {
   const grops = useAppSelector((state) => state.groups);
   const dispatch = useAppDispatch();
 
   const clickHandler = useCallback(
-    ({ id, name, type }: { id: number; name: string; type: 'group' | 'student' }): void => {
+    ({ id, name, type }: NotifyType): void => {
       dispatch(setModalNotify({ id, name, type }));
     },
     [dispatch],

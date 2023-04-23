@@ -22,6 +22,12 @@ const groupSlice = createSlice({
         group.students = group.students.filter((student) => student.id !== action.payload);
       });
     },
+    addGroupAction(state, action: PayloadAction<GroupType>) {
+      state.push(action.payload);
+    },
+    addGroupsAction(state, action: PayloadAction<GroupType[]>) {
+      return action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -29,9 +35,14 @@ const groupSlice = createSlice({
       (state, action: PayloadAction<GroupType[]>) => action.payload,
     );
 
-    builder.addCase(createGroupThunk.fulfilled, (state, action: PayloadAction<GroupType>) => {
-      state.push(action.payload);
-    });
+    builder.addCase(
+      createGroupThunk.fulfilled,
+      (state, action: PayloadAction<{ group: GroupType; created: boolean }>) => {
+        if (action.payload.created) {
+          state.push(action.payload.group);
+        }
+      },
+    );
 
     builder.addCase(addStudentsThunk.fulfilled, (state, action: PayloadAction<StudentType[]>) => {
       const group = state.find((el) => el.id === action.payload[0]?.group_id);
@@ -57,4 +68,4 @@ const groupSlice = createSlice({
 });
 
 export default groupSlice.reducer;
-export const { deleteStudentAction } = groupSlice.actions;
+export const { deleteStudentAction, addGroupAction, addGroupsAction } = groupSlice.actions;

@@ -1,3 +1,4 @@
+import type { DirectionType } from './directionsType';
 import type { StudentType } from './studentsType';
 
 export type GroupType = {
@@ -5,4 +6,6 @@ export type GroupType = {
   groupName: string;
   students: StudentType[];
   phase: number;
+  directionId: number;
+  directionType: DirectionType | null;
 };

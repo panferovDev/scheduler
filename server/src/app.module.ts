@@ -6,6 +6,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { getSequelizerConfig } from './configs/sequelize.config';
 import { StudentsModule } from './students/students.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { DirectionModule } from './direction/direction.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { StudentsModule } from './students/students.module';
       useFactory: getSequelizerConfig,
     }),
     StudentsModule,
+    DashboardModule,
+    DirectionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

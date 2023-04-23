@@ -10,4 +10,7 @@ export class GroupDtoCreate {
   @Min(1)
   @Max(3)
   phase: number;
+
+  @IsNumber()
+  directionId: number;
 }

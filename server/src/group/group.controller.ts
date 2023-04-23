@@ -21,8 +21,8 @@ export class GroupController {
 
   @UsePipes(new ValidationPipe())
   @Post()
-  async addGroup(@Body() groupName: GroupDtoCreate) {
-    return this.groupService.addGroup(groupName);
+  async addGroup(@Body() group: GroupDtoCreate) {
+    return this.groupService.addGroup(group);
   }
 
   @Delete('/:id')

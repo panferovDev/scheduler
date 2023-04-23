@@ -1,8 +1,9 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import type { NotifySliceType } from '../../types/notifyTypes';
 
 type InitilState = {
-  notify: { id: number; name: string; type: 'group' | 'student' } | null;
+  notify: NotifySliceType;
   students: number | null;
 };
 
@@ -15,10 +16,7 @@ const confirmModalSlice = createSlice({
   name: 'confirmModal',
   initialState,
   reducers: {
-    setModalNotify(
-      state,
-      action: PayloadAction<{ id: number; name: string; type: 'group' | 'student' } | null>,
-    ) {
+    setModalNotify(state, action: PayloadAction<NotifySliceType>) {
       state.notify = action.payload;
     },
 

@@ -2,17 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { GroupModel } from 'src/dbModels/group.model';
 import { StudentModel } from 'src/dbModels/student.model';
+import { GroupFront } from './entities/group.entity';
+import { DirectionModel } from 'src/dbModels/direction.model';
 
 @Injectable()
 export class GroupService {
   constructor(
     @InjectModel(GroupModel) private groupModel: typeof GroupModel,
     @InjectModel(StudentModel) private studentModel: typeof StudentModel,
+    @InjectModel(DirectionModel) private directionModel: typeof DirectionModel,
   ) {}
 
-  async getGroups() {
+  public async getGroups() {
     return await this.groupModel.findAll({
-      include: [this.studentModel],
+      include: [this.studentModel, this.directionModel],
     });
   }
 
@@ -27,14 +30,20 @@ export class GroupService {
     await this.groupModel.destroy({ where: { id } });
   }
 
-  async addGroup(group: {
-    groupName: string;
-    phase: number;
-  }): Promise<GroupModel> {
-    const [newGroup] = await this.groupModel.findOrCreate({
+  async addGroup(
+    group: GroupFront,
+  ): Promise<{ group: GroupModel; created: boolean }> {
+    const [newGroup, created] = await this.groupModel.findOrCreate({
       where: { groupName: group.groupName },
-      defaults: { phase: group.phase },
+      defaults: {
+        phase: group.phase,
+        directionId: group.directionId,
+      },
     });
-    return await this.getGroupById(newGroup.id);
+    const groupWithStudents = await this.groupModel.findOne({
+      where: { id: newGroup.id },
+      include: [this.studentModel, this.directionModel],
+    });
+    return { group: groupWithStudents, created };
   }
 }
