@@ -12,7 +12,6 @@ export class DirectionDto {
   direction: string;
 
   @IsNumber()
-  @Transform(({ value }) => parseInt(value))
   @Min(1)
   @Max(5)
   weeks: number;

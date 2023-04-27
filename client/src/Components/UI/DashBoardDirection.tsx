@@ -7,24 +7,21 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { useAppDispatch } from '../../features/reduxHooks';
 import { addDirectionThunk } from '../../features/apiThunk/directionsThunks';
 import { setNotify } from '../../features/slices/notifySlice';
-
-type Formtype = {
-  direction: string;
-  weeks: string;
-};
+import type { DirectionFormType } from '../../types';
 
 export default function DashBoardDirection(): JSX.Element {
   const dispatch = useAppDispatch();
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const { direction, weeks } = Object.fromEntries(new FormData(e.currentTarget)) as Formtype;
-    console.log(direction, weeks);
-    // if (direction !== '') {
-    //   e.currentTarget.reset();
-    //   void dispatch(addDirectionThunk(direction));
-    // } else {
-    //   dispatch(setNotify('Please enter a direction'));
-    // }
+    const { direction, weeks } = Object.fromEntries(
+      new FormData(e.currentTarget),
+    ) as DirectionFormType;
+    if (direction !== '' && weeks !== '') {
+      e.currentTarget.reset();
+      void dispatch(addDirectionThunk({ direction, weeks }));
+    } else {
+      dispatch(setNotify('Please enter a direction'));
+    }
   };
   return (
     <Row>
@@ -35,7 +32,7 @@ export default function DashBoardDirection(): JSX.Element {
               <Form.Control
                 name="direction"
                 autoComplete="off"
-                placeholder="Create derection"
+                placeholder="Create direction"
                 aria-label="Recipient's username"
                 aria-describedby="basic-addon2"
               />
@@ -48,7 +45,7 @@ export default function DashBoardDirection(): JSX.Element {
             <InputGroup className="mb-3">
               <Form.Control
                 name="weeks"
-                type='number'
+                type="number"
                 autoComplete="off"
                 placeholder="weeks in phase"
                 aria-label="Recipient's username"

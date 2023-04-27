@@ -1,15 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import type { DirectionFromApiType, DirectionType } from '../../types';
+import type { DirectionFormType, DirectionFromApiType } from '../../types';
 import { setNotify } from '../slices/notifySlice';
 import { setModalNotify } from '../slices/ConfirmModalSlise';
 
-// eslint-disable-next-line import/prefer-default-export
-export const addDirectionThunk = createAsyncThunk<DirectionFromApiType, string>(
+export const addDirectionThunk = createAsyncThunk<DirectionFromApiType, DirectionFormType>(
   'direction/addDirection',
-  async (direction, { dispatch }) =>
+  async ({direction, weeks}, { dispatch }) =>
     axios
-      .post<DirectionFromApiType>('/api/direction', { direction })
+      .post<DirectionFromApiType>('/api/direction', { direction, weeks: parseInt(weeks, 10) })
       .then((res) => res.data)
       .catch(() => {
         dispatch(setNotify('error adding direction'));
