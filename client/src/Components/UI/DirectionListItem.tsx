@@ -1,6 +1,7 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import CloseButton from 'react-bootstrap/CloseButton';
+import {BiDirections} from 'react-icons/bi'
 import type { DirectionType } from '../../types';
 import type { NotifyType } from '../../types/notifyTypes';
 
@@ -12,7 +13,8 @@ type DirectionListItemProps = {
 function DirectionListItem({ direction, modalHandler }: DirectionListItemProps): JSX.Element {
   return (
     <ListGroup.Item className="d-flex justify-content-between">
-      <span style={{ cursor: 'pointer' }}>{direction.direction}</span>
+      <BiDirections size="20" color='green'/>
+      <span style={{ cursor: 'pointer' }}>{direction.direction} [weeks: {direction.weeks}]</span>
       <CloseButton
         onClick={() =>
           modalHandler({ id: direction.id, name: direction.direction, type: 'direction' })
