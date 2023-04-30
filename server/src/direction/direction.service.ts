@@ -12,7 +12,7 @@ export class DirectionService {
   public async getDirections() {
     return await this.directionModel.findAll({
       order: [['direction', 'ASC']],
-      attributes: ['id', 'direction'],
+      attributes: ['id', 'direction', 'weeks'],
     });
   }
 

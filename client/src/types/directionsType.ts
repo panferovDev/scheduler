@@ -1,6 +1,7 @@
 export type DirectionType = {
   id: number;
   direction: string;
+  weeks: number;
 };
 
 export type DirectionFromApiType = {
