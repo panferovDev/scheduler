@@ -7,6 +7,7 @@ import AppBar from './Components/UI/AppBar';
 import CustomModal from './Components/UI/Notyfy';
 import ConfirmModal from './Components/UI/ConfirmModal';
 import StudentsModal from './Components/UI/StudentsModal';
+import DashboardWeeksDirectionsModal from './Components/UI/DashboardWeeksDirectionsModal';
 
 function App(): JSX.Element {
   return (
@@ -20,6 +21,7 @@ function App(): JSX.Element {
       <CustomModal />
       <ConfirmModal />
       <StudentsModal />
+      <DashboardWeeksDirectionsModal />
     </Container>
   );
 }

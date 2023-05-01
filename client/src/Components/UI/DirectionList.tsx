@@ -11,20 +11,24 @@ export default function DirectionList(): JSX.Element {
   const directions = useAppSelector((state) => state.directions);
   const dispatch = useAppDispatch();
 
-  const modalHandler = useCallback(({ id, name, type }: NotifyType) => {
-    dispatch(setModalNotify({ id, name, type }));
-  }, [dispatch]);
+  const modalHandler = useCallback(
+    ({ id, name, type }: NotifyType) => {
+      dispatch(setModalNotify({ id, name, type }));
+    },
+    [dispatch],
+  );
+
 
   return (
     <Row>
       <Col>
         <ListGroup>
           {directions.map((direction) => (
-            <DirectionListItem 
-            key={direction.id}
-            direction={direction}
-            modalHandler={modalHandler}
-             />
+            <DirectionListItem
+              key={direction.id}
+              direction={direction}
+              modalHandler={modalHandler}
+            />
           ))}
         </ListGroup>
       </Col>

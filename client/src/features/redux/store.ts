@@ -3,12 +3,14 @@ import groupSlice from '../slices/groupSlice';
 import notifySlice from '../slices/notifySlice';
 import confirmModalSlise from '../slices/ConfirmModalSlise';
 import directionSlice from '../slices/directionSlice';
+import dashboardWeeksDirection from '../slices/dashboardWeeksDirection';
 
 const rootReducer = combineReducers({
   groups: groupSlice,
   notify: notifySlice,
   confirm: confirmModalSlise,
   directions: directionSlice,
+  weeksDashbaoardDirections: dashboardWeeksDirection,
 });
 
 const store = configureStore({
